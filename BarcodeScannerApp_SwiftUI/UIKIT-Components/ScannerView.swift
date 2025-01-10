@@ -33,11 +33,13 @@ struct ScannerView: UIViewControllerRepresentable {
         }
         
         func didSurfaceError(error: BarcodeScannerError) {
-            switch error {
-            case .invalidDeviceInput:
-                scannerView.alertItem = AlertItems.invalidDeviceType
-            case .invalidScannedValue:
-                scannerView.alertItem = AlertItems.invalidInputType
+            DispatchQueue.main.async { [weak self] in
+                switch error {
+                case .invalidDeviceInput:
+                    self?.scannerView.alertItem = AlertItems.invalidDeviceType
+                case .invalidScannedValue:
+                    self?.scannerView.alertItem = AlertItems.invalidInputType
+                }
             }
         }
     }
